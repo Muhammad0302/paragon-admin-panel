@@ -20,9 +20,8 @@ export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  company,
+  email,
   role,
-  isVerified,
   status,
   handleClick,
 }) {
@@ -52,14 +51,13 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{email}</TableCell>
 
         <TableCell>{role}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
 
         <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+          <Label color={(status === 'block' && 'error') || 'success'}>{status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -88,6 +86,11 @@ export default function UserTableRow({
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
+             <MenuItem onClick={handleCloseMenu} sx={{ color: 'warning.main' }}>
+          <Iconify icon="fluent:block-24-regular" sx={{ mr: 2 }} />
+          Block
+        </MenuItem>
+        {/* Unblock */}
       </Popover>
     </>
   );

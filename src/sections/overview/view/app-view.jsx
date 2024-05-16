@@ -48,9 +48,9 @@ export default function AppView() {
         </Grid>
           <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Banned Users"
+            title="Block Users"
             
-            total={2}
+            total={5}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
