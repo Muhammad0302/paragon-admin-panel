@@ -20,9 +20,8 @@ import AccountPopover from './common/account-popover';
 
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
-
+  const userData = JSON.parse(localStorage.getItem('userData'))
   const lgUp = useResponsive('up', 'lg');
-
   const renderContent = (
     <>
       {!lgUp && (
@@ -34,7 +33,7 @@ export default function Header({ onOpenNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <AccountPopover />
+        <AccountPopover userData={userData} />
       </Stack>
     </>
   );
