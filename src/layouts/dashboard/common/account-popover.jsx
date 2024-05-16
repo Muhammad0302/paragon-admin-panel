@@ -33,6 +33,7 @@ export default function AccountPopover({userData}) {
   };
     const handleLogout = () => {
       localStorage.clear('userData');
+        localStorage.clear('token');
       setOpen(null);
       router.push('/login')
   };

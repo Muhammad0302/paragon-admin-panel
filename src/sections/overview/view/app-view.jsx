@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
-
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-
+import { getUserDashboardStats } from 'src/services/authenticate';
 import Iconify from 'src/components/iconify';
 
 import AppTasks from '../app-tasks';
@@ -19,6 +19,21 @@ import AppConversionRates from '../app-conversion-rates';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const [dashboardStats, setDashboardStats] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        const data = await getUserDashboardStats();
+         console.log("The dashboard state data is:",data)
+        setDashboardStats(data);
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error.message);
+      }
+    };
+
+    fetchDashboardStats();
+  }, []);
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -32,7 +47,8 @@ export default function AppView() {
           <AppWidgetSummary
             title="Total Users"
             
-            total={13}
+t
+            total={dashboardStats?.total_users}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
@@ -41,7 +57,7 @@ export default function AppView() {
           <AppWidgetSummary
             title="Active Users"
             
-            total={7}
+            total={dashboardStats?.total_active_users}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
@@ -50,7 +66,7 @@ export default function AppView() {
           <AppWidgetSummary
             title="Block Users"
             
-            total={5}
+            total={dashboardStats?.total_inactive_users}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
