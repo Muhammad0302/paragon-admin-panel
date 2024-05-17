@@ -38,7 +38,7 @@ export default function LoginView() {
         })
        
         setTimeout(() => {
-        window.location.reload();
+     
           router.push('/')
         }, 2000)
       }

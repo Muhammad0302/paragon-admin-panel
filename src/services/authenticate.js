@@ -28,5 +28,14 @@ const getUserDashboardStats = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const getAllUsers = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrl()}/users`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
-export { login, getUserDashboardStats };
+export { login, getUserDashboardStats, getAllUsers };
