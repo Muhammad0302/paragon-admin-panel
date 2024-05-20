@@ -17,6 +17,16 @@ const navConfig = [
     path: '/user',
     icon: icon('ic_user'),
   },
+  {
+    title: 'subscribe',
+    path: '/subscribe',
+    icon: icon('ic_user'),
+  },
+    {
+    title: 'package',
+    path: '/package',
+    icon: icon('ic_user'),
+  },
   // {
   //   title: 'login',
   //   path: '/login',
