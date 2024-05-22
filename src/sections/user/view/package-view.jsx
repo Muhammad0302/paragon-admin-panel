@@ -95,7 +95,7 @@ export default function PackagePage() {
 
   const notFound = !dataFiltered.length && !!filterName;
   const handleNewUser = () => {
-     navigate('/addUser')
+     navigate('/addPackage')
   }
 
   return (
@@ -128,10 +128,7 @@ export default function PackagePage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'price', label: 'Price' },
-                    { id: 'duration', label: 'Duration' },
-                    { id: 'features', label: 'Features' },
-                    { id: 'startDate', label: 'Start Date' },
-                    { id: 'endDate', label: 'End Date' },                                                       
+                    { id: 'features', label: 'Features' },                                                      
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -144,10 +141,7 @@ export default function PackagePage() {
                       key={row.id}
                       name={row.name}
                       price={row.price}
-                      duration={row.duration}
                       features={row.features}
-                      startDate={row.startDate}
-                       endDate={row.endDate}
                        status={row.status}   
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}

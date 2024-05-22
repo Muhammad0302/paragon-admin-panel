@@ -10,6 +10,8 @@ export const SubscribePage = lazy(() => import('src/pages/subscribe'));
 export const AddUserPage = lazy(() => import('src/pages/addUser'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
+export const AddSubscribePage = lazy(() => import('src/pages/addSubscribe'));
+export const AddPackagePage = lazy(() => import('src/pages/addPackage'));
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,9 @@ export default function Router() {
         { path: 'package', element: <PackagePage /> },
         { path: 'subscribe', element: <SubscribePage /> },
         { path: 'addUser', element: <AddUserPage /> },
+        { path: 'addSubscribe', element: <AddSubscribePage /> },
+        { path: 'addPackage', element: <AddPackagePage /> },
+                
       ],
     },
     {

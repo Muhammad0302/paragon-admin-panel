@@ -19,12 +19,9 @@ import Iconify from 'src/components/iconify';
 export default function UserTableRow({
   selected,
   name,
-  startDate,
-  endDate,
   features,
   price,
   status,
-  duration,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -58,10 +55,7 @@ export default function UserTableRow({
 
         <TableCell>{price}</TableCell>
 
-              <TableCell>{duration}</TableCell>
               <TableCell>{features}</TableCell>
-              <TableCell>{startDate}</TableCell>
-              <TableCell>{endDate}</TableCell>
         
         <TableCell>
           <Label color={(status === 'in-active' && 'error') || 'success'}>{status}</Label>

@@ -95,7 +95,7 @@ export default function PackagePage() {
 
   const notFound = !dataFiltered.length && !!filterName;
   const handleNewUser = () => {
-     navigate('/addUser')
+     navigate('/addSubscribe')
   }
 
   return (
