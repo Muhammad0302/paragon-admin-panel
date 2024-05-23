@@ -37,5 +37,32 @@ const getAllUsers = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const addUser = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/register`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const deleteUser = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrl()}/deleteUser/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const changeStatus = async (id, data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/updateUserStatus/${id}`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
-export { login, getUserDashboardStats, getAllUsers };
+export { login, getUserDashboardStats, getAllUsers, addUser, deleteUser, changeStatus };

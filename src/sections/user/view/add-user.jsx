@@ -7,12 +7,16 @@ import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
+import { addUser } from 'src/services/authenticate';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'
 const validationSchema = yup.object({
   Name: yup.string().required('First Name is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
-  role: yup.string().required('Role is required'),
+  password: yup
+    .string()
+    .min(5, 'Password must be at least 5 characters long')
+    .required('Password is required'),
   
 })
 
@@ -27,12 +31,62 @@ export default function AddUser() {
     initialValues: {
       Name: '',
       email: '',
-      role: '',
+      password: ''
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
         console.log("the data is:", values)
+        const data = {
+        name: values.Name,
+        email: values.email,
+        password: values.password,
+      }
+      try {
+        const res = await addUser(data)
+        console.log('Add user api response', res)
+        if (res.message === "The email has already been taken.") {
+          toast.error('Email already exist', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+ 
+        } else {
+          toast.success('User Register Successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+        setTimeout(() => {
          navigate('/user')
+        }, 2000)
+        }
+      
+      } catch (error) {
+        toast.error('Error while registering user', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+      }
     },
   })
   return (
@@ -77,34 +131,23 @@ export default function AddUser() {
               sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
               InputLabelProps={{ focused: false }}
             />
+            </Grid>
+               <Grid item xs={12} sm={6}>
+            <TextField
+              id='password'
+              name='password'
+              label='Password'
+              variant='outlined'
+              fullWidth
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
+              InputLabelProps={{ focused: false }}
+            />
           </Grid>
-         <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel
-                id='role-label'
-                error={formik.touched.role && Boolean(formik.errors.role)}
-              >
-                Role
-              </InputLabel>
-              <Select
-                labelId='role'
-                id='role'
-                name='role'
-                value={formik.values.role}
-                onChange={(e) => {
-                  formik.setFieldValue('role', e.target.value)
-                }}
-                error={formik.touched.role && Boolean(formik.errors.role)}
-                sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
-              >
-                <MenuItem value='Admin'>Admin</MenuItem>
-                <MenuItem value='Supervisor'>Supervisor</MenuItem>
-                              </Select>
-                                {formik.touched.role && Boolean(formik.errors.role) && (
-                <FormHelperText sx={{ color: '#d32f2f' }}>{formik.errors.role}</FormHelperText>
-              )}
-            </FormControl>
-          </Grid>
+
 
        
 
