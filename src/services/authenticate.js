@@ -65,4 +65,54 @@ const changeStatus = async (id, data) => {
   }
 };
 
-export { login, getUserDashboardStats, getAllUsers, addUser, deleteUser, changeStatus };
+const getAllPackages = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrl()}/packages`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const addPackage = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/register`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
+const deletePackage = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrl()}/deletePackage/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
+const changeStatusPackage = async (id, data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/updateUserStatus/${id}`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
+export {
+  login,
+  getUserDashboardStats,
+  getAllUsers,
+  addUser,
+  deleteUser,
+  changeStatus,
+  getAllPackages,
+  addPackage,
+  changeStatusPackage,
+  deletePackage,
+};

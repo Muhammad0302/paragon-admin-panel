@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -11,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { packages } from 'src/_mock/user';
+import { getAllPackages } from 'src/services/authenticate';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -26,6 +27,8 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 // ----------------------------------------------------------------------
 
 export default function PackagePage() {
+    const [counter, setCounter] = useState(0)
+  const [data,setData] = useState([])
   const [page, setPage] = useState(0);
      const navigate = useNavigate();
   const [order, setOrder] = useState('asc');
@@ -48,7 +51,7 @@ export default function PackagePage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = packages.map((n) => n.name);
+      const newSelecteds = data.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -88,7 +91,7 @@ export default function PackagePage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: packages,
+    inputData: data,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -97,6 +100,20 @@ export default function PackagePage() {
   const handleNewUser = () => {
      navigate('/addPackage')
   }
+
+    useEffect(() => {
+       const fetchUsersData = async () => {
+    try {
+      const response = await getAllPackages()
+      console.log('The response of api is:', response)
+      const listOfData = response.packages
+      setData(listOfData)
+    } catch (error) {
+      console.error('Error fetching data:', error.message)
+    }
+  }
+    fetchUsersData()
+  }, [counter])
 
   return (
     <Container>
@@ -121,7 +138,7 @@ export default function PackagePage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={packages.length}
+                rowCount={data.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -139,10 +156,12 @@ export default function PackagePage() {
                   .map((row) => (
                     <PackageTableRow
                       key={row.id}
+                       id={row.id}
                       name={row.name}
                       price={row.price}
                       features={row.features}
-                       status={row.status}   
+                      // status={row.status}   
+                      status={'active'}   
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -150,7 +169,7 @@ export default function PackagePage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, packages.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, data.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -162,7 +181,7 @@ export default function PackagePage() {
         <TablePagination
           page={page}
           component="div"
-          count={packages.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[ 8,16, 32]}

@@ -11,7 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { users } from 'src/_mock/user';
-
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import "./style.css"
@@ -191,6 +192,19 @@ export default function UserPage() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+          <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='colored'
+        transition={Bounce} // Specify Bounce as the transition prop value
+      />
     </Container>
   );
 }

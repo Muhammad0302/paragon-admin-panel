@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { deleteUser } from 'src/services/authenticate';
+import { deleteUser,changeStatus } from 'src/services/authenticate';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -45,6 +45,48 @@ export default function UserTableRow({
       const res = await deleteUser(id)
       console.log('Delete api response', res)
       toast.success('Account Deleted Successfully', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+      setCounter(counter + 1)
+    } catch (error) {
+      toast.error('Error while deleting user', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+    }
+  }
+    const handleStatus = async(id,status) => {
+    setOpen(null);
+      console.log("The user id and status is:", id,status)
+      let data;
+      if (status === 'active') {
+      data = {
+         "status": 1
+      }     
+      } else {
+          data = {
+         "status": 0
+      } 
+      }
+     try {
+      const res = await changeStatus(id,data)
+      console.log('Status api response', res)
+      toast.success('Status updated Successfully', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -121,13 +163,13 @@ export default function UserTableRow({
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
-             <MenuItem onClick={handleCloseMenu} sx={{ color: 'warning.main' }}>
+             <MenuItem onClick={()=>handleStatus(id,status ==='block' ? 'active' : 'block')} sx={{ color: 'warning.main' }}>
           <Iconify icon="fluent:block-24-regular" sx={{ mr: 2 }} />
-          Block
+         {status ==='block' ? 'Active' : 'Block'} 
         </MenuItem>
         {/* Unblock */}
       </Popover>
-      <ToastContainer
+      {/* <ToastContainer
         position='top-right'
         autoClose={5000}
         hideProgressBar={false}
@@ -139,7 +181,7 @@ export default function UserTableRow({
         pauseOnHover
         theme='colored'
         transition={Bounce} // Specify Bounce as the transition prop value
-      />
+      /> */}
     </>
   );
 }

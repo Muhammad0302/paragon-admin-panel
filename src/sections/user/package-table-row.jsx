@@ -22,6 +22,7 @@ export default function UserTableRow({
   features,
   price,
   status,
+  id,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -55,7 +56,7 @@ export default function UserTableRow({
 
         <TableCell>{price}</TableCell>
 
-              <TableCell>{features}</TableCell>
+              <TableCell>Purchase, Sale, Person Management</TableCell>
         
         <TableCell>
           <Label color={(status === 'in-active' && 'error') || 'success'}>{status}</Label>
