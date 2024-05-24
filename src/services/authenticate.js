@@ -104,6 +104,35 @@ const changeStatusPackage = async (id, data) => {
   }
 };
 
+const addSubscription = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/subcriptions/create`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
+const getAllSubscribePackages = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrl()}/subcriptions`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const deleteSubscription = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrl()}/subcriptions/destroy/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
 export {
   login,
   getUserDashboardStats,
@@ -115,4 +144,7 @@ export {
   addPackage,
   changeStatusPackage,
   deletePackage,
+  addSubscription,
+  getAllSubscribePackages,
+  deleteSubscription,
 };

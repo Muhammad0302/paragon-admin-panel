@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -11,7 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { subscribes } from 'src/_mock/user';
-
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import "./style.css"
@@ -22,12 +23,15 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import { getAllSubscribePackages } from 'src/services/authenticate';
 
 // ----------------------------------------------------------------------
 
 export default function PackagePage() {
+    const [counter, setCounter] = useState(0)
+  const [data,setData] = useState([])
   const [page, setPage] = useState(0);
-     const navigate = useNavigate();
+  const navigate = useNavigate();
   const [order, setOrder] = useState('asc');
 
   const [selected, setSelected] = useState([]);
@@ -48,7 +52,7 @@ export default function PackagePage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = subscribes.map((n) => n.name);
+      const newSelecteds = data.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -88,7 +92,7 @@ export default function PackagePage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: subscribes,
+    inputData: data,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -97,6 +101,20 @@ export default function PackagePage() {
   const handleNewUser = () => {
      navigate('/addSubscribe')
   }
+
+   useEffect(() => {
+       const fetchUsersData = async () => {
+    try {
+      const response = await getAllSubscribePackages()
+      console.log('The response get all users', response)
+      const listOfData = response.subscription
+      setData(listOfData)
+    } catch (error) {
+      console.error('Error fetching data data:', error.message)
+    }
+  }
+    fetchUsersData()
+  }, [counter])
 
   return (
     <Container>
@@ -121,7 +139,7 @@ export default function PackagePage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={subscribes.length}
+                rowCount={data.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -132,8 +150,7 @@ export default function PackagePage() {
                   { id: 'price', label: 'Price' },
                     { id: 'duration', label: 'Duration' },
                     { id: 'features', label: 'Features' },
-                    { id: 'startDate', label: 'Start Date' },
-                    { id: 'endDate', label: 'End Date' },                                                       
+                                                                      
     
                   { id: '' },
                 ]}
@@ -143,16 +160,18 @@ export default function PackagePage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <SubscribeTableRow
+                      counter={counter}
+                      setCounter={setCounter}
                       key={row.id}
-                      userName={row.user_name}
-                      email={row.user_name}    
-                      name={row.name}
-                      price={row.price}
-                      duration={row.duration}
-                      features={row.features}
-                      startDate={row.startDate}
-                       endDate={row.endDate}
-                 
+                      id={row.id}
+                      userName={row.user.name}
+                      email={row.user.email}    
+                      name={row.package.name}
+                      price={row.package.price}
+                      duration={row.type}
+                      features={row.package.features}
+                      user_id={row.user.id}
+                      package_id={row.package.id} 
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -160,7 +179,7 @@ export default function PackagePage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, subscribes.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, data.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -172,13 +191,26 @@ export default function PackagePage() {
         <TablePagination
           page={page}
           component="div"
-          count={subscribes.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[ 8,16, 32]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+             <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='colored'
+        transition={Bounce} // Specify Bounce as the transition prop value
+      />
     </Container>
   );
 }

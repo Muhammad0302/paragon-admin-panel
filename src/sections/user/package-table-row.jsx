@@ -56,7 +56,7 @@ export default function UserTableRow({
 
         <TableCell>{price}</TableCell>
 
-              <TableCell>Purchase, Sale, Person Management</TableCell>
+        <TableCell>{ features}</TableCell>
         
         <TableCell>
           <Label color={(status === 'in-active' && 'error') || 'success'}>{status}</Label>

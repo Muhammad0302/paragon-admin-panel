@@ -111,7 +111,21 @@ export default function UserTableRow({
         transition: Bounce,
       })
     }
- }
+    }
+  
+  
+  const handleEdit = () => {
+    navigate('/addUser',
+      {
+      state: {
+        id,
+        name,
+        email,
+      },
+    }
+    )
+    setOpen(null);
+  };
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -154,7 +168,7 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleEdit}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
@@ -169,19 +183,7 @@ export default function UserTableRow({
         </MenuItem>
         {/* Unblock */}
       </Popover>
-      {/* <ToastContainer
-        position='top-right'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='colored'
-        transition={Bounce} // Specify Bounce as the transition prop value
-      /> */}
+  
     </>
   );
 }

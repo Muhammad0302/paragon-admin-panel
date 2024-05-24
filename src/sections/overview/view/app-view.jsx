@@ -75,7 +75,7 @@ t
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Total Revenue"
-            total={"180k"}
+            total={dashboardStats?.total_revenue + ' PKR'}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_revenue.png" />}
           />
