@@ -12,7 +12,8 @@ import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { packages } from 'src/_mock/user';
 import { getAllPackages } from 'src/services/authenticate';
-
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import "./style.css"
@@ -156,12 +157,13 @@ export default function PackagePage() {
                   .map((row) => (
                     <PackageTableRow
                       key={row.id}
-                       id={row.id}
+                      id={row.id}
+                      counter={counter}
+                      setCounter={setCounter}
                       name={row.name}
                       price={row.price}
                       features={row.features}
-                      // status={row.status}   
-                      status={'active'}   
+                      status={row.status}   
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -188,6 +190,19 @@ export default function PackagePage() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+             <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='colored'
+        transition={Bounce} // Specify Bounce as the transition prop value
+      />
     </Container>
   );
 }

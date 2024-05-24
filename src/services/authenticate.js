@@ -76,7 +76,7 @@ const getAllPackages = async () => {
 };
 const addPackage = async (data) => {
   try {
-    const response = await axios.post(`${getBaseUrl()}/register`, data, config);
+    const response = await axios.post(`${getBaseUrl()}/packages/create`, data, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -86,7 +86,16 @@ const addPackage = async (data) => {
 
 const deletePackage = async (id) => {
   try {
-    const response = await axios.delete(`${getBaseUrl()}/deletePackage/${id}`, config);
+    const response = await axios.delete(`${getBaseUrl()}/packages/destroy/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const updatePackage = async (id, data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/packages/update/${id}`, data, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -94,9 +103,14 @@ const deletePackage = async (id) => {
   }
 };
 
-const changeStatusPackage = async (id, data) => {
+const changeStatusPackage = async (id, status) => {
   try {
-    const response = await axios.post(`${getBaseUrl()}/updateUserStatus/${id}`, data, config);
+    console.log('The status field is', status);
+    const response = await axios.post(
+      `${getBaseUrl()}/packages/updateStatus/${id}`,
+      { status: status },
+      config
+    );
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -133,6 +147,16 @@ const deleteSubscription = async (id) => {
   }
 };
 
+const updateUser = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrl()}/updateUser`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
 export {
   login,
   getUserDashboardStats,
@@ -147,4 +171,6 @@ export {
   addSubscription,
   getAllSubscribePackages,
   deleteSubscription,
+  updateUser,
+  updatePackage,
 };

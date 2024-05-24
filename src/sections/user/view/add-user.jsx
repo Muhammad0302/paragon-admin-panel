@@ -7,8 +7,8 @@ import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { addUser } from 'src/services/authenticate';
-import { useNavigate } from 'react-router-dom';
+import { addUser,updateUser } from 'src/services/authenticate';
+import { useNavigate,useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'
 const validationSchema = yup.object({
   Name: yup.string().required('First Name is required'),
@@ -26,23 +26,52 @@ import "./style.css"
 // ----------------------------------------------------------------------
 
 export default function AddUser() {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  console.log("The pass states is:",state)
   const formik = useFormik({
     initialValues: {
-      Name: '',
-      email: '',
+      Name: state?.name ||'',
+      email: state?.email ||'',
       password: ''
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
         console.log("the data is:", values)
-        const data = {
+        
+      try {
+        if (state) {
+          const data = {
+          id:state.id,
         name: values.Name,
         email: values.email,
         password: values.password,
-      }
-      try {
-        const res = await addUser(data)
+        }
+         const res = await updateUser(data)
+         console.log('api response', res)
+          toast.success('User account updated successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+        setTimeout(() => {
+         navigate('/user')
+        }, 2000)
+       
+        } else {
+          const data = {
+        name: values.Name,
+        email: values.email,
+        password: values.password,
+        }
+          const res = await addUser(data)
         console.log('Add user api response', res)
         if (res.message === "The email has already been taken.") {
           toast.error('Email already exist', {
@@ -58,7 +87,7 @@ export default function AddUser() {
         })
  
         } else {
-          toast.success('User Register Successfully', {
+          toast.success('User register successfully', {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
@@ -73,6 +102,8 @@ export default function AddUser() {
          navigate('/user')
         }, 2000)
         }
+        }
+     
       
       } catch (error) {
         toast.error('Error while registering user', {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
+import { useNavigate,useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -30,7 +31,7 @@ export default function UserTableRow({
   setCounter
 }) {
   const [open, setOpen] = useState(null);
-
+  const navigate = useNavigate();
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
@@ -38,7 +39,8 @@ export default function UserTableRow({
   const handleCloseMenu = () => {
     setOpen(null);
   };
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
+    
     setOpen(null);
     console.log("The user id is:",id)
      try {
@@ -115,6 +117,7 @@ export default function UserTableRow({
   
   
   const handleEdit = () => {
+    
     navigate('/addUser',
       {
       state: {

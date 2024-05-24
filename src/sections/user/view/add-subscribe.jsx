@@ -27,12 +27,8 @@ import "./style.css"
 
 export default function AddSubscribe() {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const { state } = location;
-  // console.log("The pass states is:",state)
   const [users, setUsers] = useState([])
   const [packages, setPackages] = useState([])
-  // state?.features ||
   const formik = useFormik({
     initialValues: {
      Package:  '',

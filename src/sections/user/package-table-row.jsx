@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -9,8 +10,9 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
+import { deletePackage,changeStatusPackage } from 'src/services/authenticate';
 import IconButton from '@mui/material/IconButton';
-
+import { useNavigate,useLocation } from 'react-router-dom';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -18,6 +20,8 @@ import Iconify from 'src/components/iconify';
 
 export default function UserTableRow({
   selected,
+  counter,
+  setCounter,
   name,
   features,
   price,
@@ -26,7 +30,7 @@ export default function UserTableRow({
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
-
+  const navigate = useNavigate();
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
@@ -34,6 +38,86 @@ export default function UserTableRow({
   const handleCloseMenu = () => {
     setOpen(null);
   };
+    const handleEdit = () => {
+    
+    navigate('/addPackage',
+      {
+      state: {
+        id,
+        name,
+        price,
+        features,
+      },
+    }
+    )
+    setOpen(null);
+    };
+  
+    const handleDelete = async () => {
+    
+    setOpen(null);
+     try {
+      const res = await deletePackage(id)
+      console.log('Delete api response', res)
+      toast.success('Package deleted successfully', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+      setCounter(counter + 1)
+    } catch (error) {
+      toast.error('Error while deleting package', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+    }
+    }
+  
+   const handleStatus = async(id,status) => {
+     setOpen(null);
+  
+     try {
+      const res = await changeStatusPackage(id,status)
+      console.log('Status api response', res)
+      toast.success('Status updated successfully', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+      setCounter(counter + 1)
+    } catch (error) {
+      toast.error('Error while updating status', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+    }
+    }
 
   return (
     <>
@@ -59,7 +143,7 @@ export default function UserTableRow({
         <TableCell>{ features}</TableCell>
         
         <TableCell>
-          <Label color={(status === 'in-active' && 'error') || 'success'}>{status}</Label>
+          <Label color={(status === 0 && 'error') || 'success'}>{status ===1 ? 'Active' : 'In-active'}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -79,18 +163,18 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleEdit}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
-             <MenuItem onClick={handleCloseMenu} sx={{ color: 'warning.main' }}>
+             <MenuItem onClick={()=>handleStatus(id,status ===1 ? 0 : 1)} sx={{ color: 'warning.main' }}>
           <Iconify icon="fluent:block-24-regular" sx={{ mr: 2 }} />
-          In-active
+          {status ===1 ? 'In-active' : 'Active'}
         </MenuItem>
         {/* Unblock */}
       </Popover>

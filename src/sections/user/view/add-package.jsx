@@ -5,14 +5,15 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { updatePackage,addPackage } from 'src/services/authenticate';
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'
 const validationSchema = yup.object({
   Name: yup.string().required('First Name is required'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  features: yup.string().required('Role is required'),
+  price: yup.string().required('Price is required'),
+  features: yup.string().required('Features is required'),
   
 })
 
@@ -22,17 +23,80 @@ import "./style.css"
 // ----------------------------------------------------------------------
 
 export default function AddPackage() {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  console.log("The pass state value is:",state)
     const formik = useFormik({
     initialValues: {
-      Name: '',
-      price: '',
-      features: '',
+      Name: state?.name ||'',
+      price: state?.price ||'',
+      features: state?.features ||'',
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
         console.log("the data is:", values)
-         navigate('/user')
+             
+      try {
+        if (state) {
+          const data = {
+            name: values.Name,
+            price: values.price,
+            features: values.features,
+        }
+         const res = await updatePackage(state.id,data)
+         console.log('api response', res)
+          toast.success('Packages updated successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+        setTimeout(() => {
+         navigate('/package')
+        }, 2000)
+       
+        } else {
+          const data = {
+            name: values.Name,
+            price: values.price,
+            features: values.features,
+        }
+          const res = await addPackage(data)
+          console.log('api response', res)
+          toast.success('Package added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+        setTimeout(() => {
+         navigate('/package')
+        }, 2000)
+        }
+      } catch (error) {
+        toast.error('Error while registering user', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
+      }
     },
   })
   return (

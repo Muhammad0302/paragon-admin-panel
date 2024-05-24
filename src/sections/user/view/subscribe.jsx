@@ -22,7 +22,7 @@ import SubscribeTableRow from '../subscribe-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../utils';
+import { emptyRows, applyFilterSubscribe, getComparator } from '../utils';
 import { getAllSubscribePackages } from 'src/services/authenticate';
 
 // ----------------------------------------------------------------------
@@ -52,7 +52,7 @@ export default function PackagePage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n) => n.name);
+      const newSelecteds = data?.map((n) => n?.user.name);
       setSelected(newSelecteds);
       return;
     }
@@ -91,7 +91,7 @@ export default function PackagePage() {
     setFilterName(event.target.value);
   };
 
-  const dataFiltered = applyFilter({
+  const dataFiltered = applyFilterSubscribe({
     inputData: data,
     comparator: getComparator(order, orderBy),
     filterName,
