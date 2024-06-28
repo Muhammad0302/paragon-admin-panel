@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { deleteSubscription } from 'src/services/authenticate';
+import { deleteSubscription,approveSubscription } from 'src/services/authenticate';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -32,6 +32,7 @@ export default function UserTableRow({
   user_id,
   package_id,
   handleClick,
+  status
 }) {
   const [open, setOpen] = useState(null);
     const navigate = useNavigate();
@@ -90,7 +91,39 @@ export default function UserTableRow({
         transition: Bounce,
       })
     }
-  }
+   }
+   const handleStatus = async(id) => {
+    setOpen(null);
+     try {
+      const res = await approveSubscription(id)
+      console.log('Approve subscription api response', res)
+      toast.success('Subscription approved successfully', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+      setCounter(counter + 1)
+    } catch (error) {
+      toast.error('Error while approving subscription', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      })
+    }
+   }
+  
 
   return (
     <>
@@ -117,7 +150,9 @@ export default function UserTableRow({
 
               <TableCell>{duration}</TableCell>
         <TableCell>{features}</TableCell>
-    
+           <TableCell>
+          <Label color={(status === 1 && 'success') || 'error'}>{status ===1 ? 'Approved' : 'Pending'}</Label>
+        </TableCell>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -144,6 +179,16 @@ export default function UserTableRow({
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
+        {status === 0 && <>
+          <MenuItem
+          onClick={() => handleStatus(user_id)}
+          sx={{ color: 'warning.main' }}>
+          <Iconify icon="fluent:block-24-regular" sx={{ mr: 2 }} />
+            Approve 
+        </MenuItem>  
+        </>}
+      
+
           
         {/* Unblock */}
       </Popover>

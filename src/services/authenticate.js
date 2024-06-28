@@ -156,6 +156,19 @@ const updateUser = async (data) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const approveSubscription = async (id) => {
+  try {
+    const response = await axios.post(
+      `${getBaseUrl()}/subcriptions/approveSubscription/${id}`,
+      { status: 1 },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
 export {
   login,
@@ -173,4 +186,5 @@ export {
   deleteSubscription,
   updateUser,
   updatePackage,
+  approveSubscription,
 };

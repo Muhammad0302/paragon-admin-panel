@@ -149,7 +149,8 @@ export default function PackagePage() {
                   { id: 'packageName', label: 'Package Name' },
                   { id: 'price', label: 'Price' },
                     { id: 'duration', label: 'Duration' },
-                    { id: 'features', label: 'Features' },
+                   { id: 'features', label: 'Features' },
+                     { id: 'status', label: 'Status' },
                                                                       
     
                   { id: '' },
@@ -174,6 +175,7 @@ export default function PackagePage() {
                       package_id={row.package.id} 
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
+                      status={row.status}  
                     />
                   ))}
 
