@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
@@ -9,7 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
-
+import {  List, ListItem, ListItemText, Collapse } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
@@ -22,6 +23,7 @@ import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
+import navConfig1 from './config-navigation1';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +32,14 @@ export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
-
+	const [open, setOpen] = useState(false);
+  	const [open1, setOpen1] = useState(false);
+	const handleClick = () => {
+		setOpen(!open);
+  };
+  const handleClick1 = () => {
+		setOpen1(!open1);
+	};
   useEffect(() => {
     if (openNav) {
       onCloseNav();
@@ -64,9 +73,36 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
-      {navConfig.map((item) => (
+      <List>
+					<ListItem button onClick={handleClick}>
+						<ListItemText primary="Paragon" />
+						{open ? <ExpandLess /> : <ExpandMore />}
+					</ListItem>
+					<Collapse in={open} timeout="auto" unmountOnExit>
+						<List component="div" disablePadding>
+						  {navConfig.map((item) => (
         <NavItem key={item.title} item={item} />
+       
       ))}
+						</List>
+					</Collapse>
+      </List>
+         <List>
+					<ListItem button onClick={handleClick1}>
+						<ListItemText primary="Swatti Autos" />
+						{open1 ? <ExpandLess /> : <ExpandMore />}
+					</ListItem>
+					<Collapse in={open1} timeout="auto" unmountOnExit>
+						<List component="div" disablePadding>
+						  {navConfig1.map((item) => (
+        <NavItem key={item.title} item={item} />
+       
+             ))}
+						</List>
+					</Collapse>
+		</List>
+     
+    
     </Stack>
   );
 
