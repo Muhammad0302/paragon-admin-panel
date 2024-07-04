@@ -99,7 +99,7 @@ export default function PackagePage() {
 
   const notFound = !dataFiltered.length && !!filterName;
   const handleNewUser = () => {
-     navigate('/addPackage')
+     navigate('/paragon/addPackage')
   }
 
     useEffect(() => {

@@ -98,7 +98,7 @@ export default function UserPage() {
 
   const notFound = !dataFiltered.length && !!filterName;
   const handleNewUser = () => {
-     navigate('/addUser')
+     navigate('/paragon/addUser')
   }
 
   useEffect(() => {
