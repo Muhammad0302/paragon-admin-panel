@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getBaseUrl } from '../utils/getBaseUrl';
+import { getBaseUrl, getBaseUrlSwati } from '../utils/getBaseUrl';
 import { UserInfo } from '../utils/UserInfo';
 const token = UserInfo();
 const config = {
@@ -28,6 +28,15 @@ const getUserDashboardStats = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const getUserDashboardStatsSwati = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrlSwati()}/dashboard_stats`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 const getAllUsers = async () => {
   try {
     const response = await axios.get(`${getBaseUrl()}/users`, config);
@@ -37,9 +46,27 @@ const getAllUsers = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const getAllUsersSwathi = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrlSwati()}/users`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 const addUser = async (data) => {
   try {
     const response = await axios.post(`${getBaseUrl()}/register`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const addUserSwati = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrlSwati()}/register`, data, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -187,4 +214,7 @@ export {
   updateUser,
   updatePackage,
   approveSubscription,
+  getUserDashboardStatsSwati,
+  getAllUsersSwathi,
+  addUserSwati,
 };

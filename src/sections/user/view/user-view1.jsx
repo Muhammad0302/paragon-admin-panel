@@ -16,7 +16,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import "./style.css"
-import { getAllUsers } from 'src/services/authenticate';
+import { getAllUsersSwathi } from 'src/services/authenticate';
 import TableNoData from '../table-no-data';
 import UserTableRow1 from '../user-table-row1';
 import UserTableHead from '../user-table-head';
@@ -104,7 +104,7 @@ export default function UserPage() {
   useEffect(() => {
        const fetchUsersData = async () => {
     try {
-      const response = await getAllUsers()
+      const response = await getAllUsersSwathi()
       console.log('The response get all users', response)
       const listOfData = response[1]
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { getUserDashboardStats } from 'src/services/authenticate';
+import { getUserDashboardStatsSwati } from 'src/services/authenticate';
 import Iconify from 'src/components/iconify';
 
 import AppTasks from '../app-tasks';
@@ -24,7 +24,7 @@ export default function AppView() {
   useEffect(() => {
     const fetchDashboardStats = async () => {
       try {
-        const data = await getUserDashboardStats();
+        const data = await getUserDashboardStatsSwati();
          console.log("The dashboard state data is:",data)
         setDashboardStats(data);
       } catch (error) {

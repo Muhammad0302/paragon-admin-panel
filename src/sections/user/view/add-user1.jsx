@@ -7,7 +7,7 @@ import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { addUser,updateUser } from 'src/services/authenticate';
+import { addUserSwati,updateUser } from 'src/services/authenticate';
 import { useNavigate,useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'
 const validationSchema = yup.object({
@@ -71,7 +71,7 @@ export default function AddUser1() {
         email: values.email,
         password: values.password,
         }
-          const res = await addUser(data)
+          const res = await addUserSwati(data)
         console.log('Add user api response', res)
         if (res.message === "The email has already been taken.") {
           toast.error('Email already exist', {
