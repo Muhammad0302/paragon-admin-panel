@@ -4,7 +4,7 @@ import { AddUserView1 } from 'src/sections/user/view';
 
 // ----------------------------------------------------------------------
 
-export default function AddUserPage() {
+export default function AddUserPage1() {
   return (
     <>
       <Helmet>

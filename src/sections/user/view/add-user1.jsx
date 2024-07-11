@@ -147,7 +147,8 @@ export default function AddUser1() {
               sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
               InputLabelProps={{ focused: false }}
             />
-          </Grid>
+            </Grid>
+      
           <Grid item xs={12} sm={6}>
             <TextField
               id='email'

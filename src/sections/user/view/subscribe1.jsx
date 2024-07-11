@@ -23,7 +23,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilterSubscribe, getComparator } from '../utils';
-import { getAllSubscribePackages } from 'src/services/authenticate';
+import { getAllSubscribePackagesSwathi } from 'src/services/authenticate';
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ export default function PackagePage() {
    useEffect(() => {
        const fetchUsersData = async () => {
     try {
-      const response = await getAllSubscribePackages()
+      const response = await getAllSubscribePackagesSwathi()
       console.log('The response get all users', response)
       const listOfData = response.subscription
       setData(listOfData)

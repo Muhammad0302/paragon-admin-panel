@@ -89,7 +89,7 @@ export default function Nav({ openNav, onCloseNav }) {
       </List>
          <List>
 					<ListItem button onClick={handleClick1}>
-						<ListItemText primary="Swatti Autos" />
+						<ListItemText primary="Auto Hub" />
 						{open1 ? <ExpandLess /> : <ExpandMore />}
 					</ListItem>
 					<Collapse in={open1} timeout="auto" unmountOnExit>

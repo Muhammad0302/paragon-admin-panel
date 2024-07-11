@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { deleteUser,changeStatus } from 'src/services/authenticate';
+import { deleteUserSwathi,changeStatus } from 'src/services/authenticate';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -44,7 +44,7 @@ export default function UserTableRow1({
     setOpen(null);
     console.log("The user id is:",id)
      try {
-      const res = await deleteUser(id)
+      const res = await deleteUserSwathi(id)
       console.log('Delete api response', res)
       toast.success('Account Deleted Successfully', {
         position: 'top-right',

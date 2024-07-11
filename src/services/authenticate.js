@@ -82,6 +82,15 @@ const deleteUser = async (id) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const deleteUserSwathi = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrlSwati()}/deleteUser/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 const changeStatus = async (id, data) => {
   try {
     const response = await axios.post(`${getBaseUrl()}/updateUserStatus/${id}`, data, config);
@@ -95,6 +104,15 @@ const changeStatus = async (id, data) => {
 const getAllPackages = async () => {
   try {
     const response = await axios.get(`${getBaseUrl()}/packages`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const getAllPackagesSwathi = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrlSwati()}/packages`, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -164,6 +182,15 @@ const getAllSubscribePackages = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const getAllSubscribePackagesSwathi = async () => {
+  try {
+    const response = await axios.get(`${getBaseUrlSwati()}/subcriptions`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 const deleteSubscription = async (id) => {
   try {
     const response = await axios.delete(`${getBaseUrl()}/subcriptions/destroy/${id}`, config);
@@ -217,4 +244,7 @@ export {
   getUserDashboardStatsSwati,
   getAllUsersSwathi,
   addUserSwati,
+  getAllSubscribePackagesSwathi,
+  getAllPackagesSwathi,
+  deleteUserSwathi,
 };

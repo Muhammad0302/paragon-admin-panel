@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { packages } from 'src/_mock/user';
-import { getAllPackages } from 'src/services/authenticate';
+import { getAllPackagesSwathi } from 'src/services/authenticate';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import Iconify from 'src/components/iconify';
@@ -105,7 +105,7 @@ export default function PackagePage() {
     useEffect(() => {
        const fetchUsersData = async () => {
     try {
-      const response = await getAllPackages()
+      const response = await getAllPackagesSwathi()
       console.log('The response of api is:', response)
       const listOfData = response.packages
       setData(listOfData)
