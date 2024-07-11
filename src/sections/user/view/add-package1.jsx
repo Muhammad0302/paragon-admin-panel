@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import { updatePackage,addPackage } from 'src/services/authenticate';
+import { updatePackage,addPackageSwathi } from 'src/services/authenticate';
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import { useNavigate,useLocation } from 'react-router-dom';
@@ -67,7 +67,7 @@ export default function AddPackage1() {
             price: values.price,
             features: values.features,
         }
-          const res = await addPackage(data)
+          const res = await addPackageSwathi(data)
           console.log('api response', res)
           toast.success('Package added successfully', {
           position: 'top-right',
@@ -126,7 +126,8 @@ export default function AddPackage1() {
               sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
               InputLabelProps={{ focused: false }}
             />
-          </Grid>
+            </Grid>
+            
           <Grid item xs={12} sm={6}>
             <TextField
               id='price'

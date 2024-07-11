@@ -7,7 +7,7 @@ import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { addUserSwati,updateUser } from 'src/services/authenticate';
+import { addUserSwati,updateUserSwathi } from 'src/services/authenticate';
 import { useNavigate,useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'
 const validationSchema = yup.object({
@@ -48,7 +48,7 @@ export default function AddUser1() {
         email: values.email,
         password: values.password,
         }
-         const res = await updateUser(data)
+         const res = await updateUserSwathi(data)
          console.log('api response', res)
           toast.success('User account updated successfully', {
           position: 'top-right',

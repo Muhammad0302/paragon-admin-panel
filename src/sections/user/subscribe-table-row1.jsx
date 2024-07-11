@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { deleteSubscription,approveSubscription } from 'src/services/authenticate';
+import { deleteSubscriptionSwathi,approveSubscriptionSwathi } from 'src/services/authenticate';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -64,7 +64,7 @@ export default function UserTableRow1({
    const handleDelete = async(id) => {
     setOpen(null);
      try {
-      const res = await deleteSubscription(id)
+      const res = await deleteSubscriptionSwathi(id)
       console.log('Delete api response', res)
       toast.success('Subscription deleted successfully', {
         position: 'top-right',
@@ -95,7 +95,7 @@ export default function UserTableRow1({
    const handleStatus = async(id) => {
     setOpen(null);
      try {
-      const res = await approveSubscription(id)
+      const res = await approveSubscriptionSwathi(id)
       console.log('Approve subscription api response', res)
       toast.success('Subscription approved successfully', {
         position: 'top-right',

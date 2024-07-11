@@ -16,7 +16,9 @@ export const AddUserPage1 = lazy(() => import('src/pages/addUser1'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const AddSubscribePage = lazy(() => import('src/pages/addSubscribe'));
+export const AddSubscribePage1 = lazy(() => import('src/pages/addSubscribe1'));
 export const AddPackagePage = lazy(() => import('src/pages/addPackage'));
+export const AddPackagePage1 = lazy(() => import('src/pages/addPackage1'));
 
 // ----------------------------------------------------------------------
 
@@ -46,8 +48,8 @@ export default function Router() {
         { path: 'swatti/package', element: <PackagePage1 /> },
         { path: 'swatti/subscribe', element: <SubscribePage1 /> },
         { path: 'swatti/addUser', element: <AddUserPage1 /> },
-        { path: 'swatti/addSubscribe', element: <AddSubscribePage /> },
-        { path: 'swatti/addPackage', element: <AddPackagePage /> },
+        { path: 'swatti/addSubscribe', element: <AddSubscribePage1 /> },
+        { path: 'swatti/addPackage', element: <AddPackagePage1 /> },
 
                 
       ],

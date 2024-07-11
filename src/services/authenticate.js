@@ -46,6 +46,7 @@ const getAllUsers = async () => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+
 const getAllUsersSwathi = async () => {
   try {
     const response = await axios.get(`${getBaseUrlSwati()}/users`, config);
@@ -128,10 +129,28 @@ const addPackage = async (data) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const addPackageSwathi = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrlSwati()}/packages/create`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
 const deletePackage = async (id) => {
   try {
     const response = await axios.delete(`${getBaseUrl()}/packages/destroy/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const deletePackageSwathi = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrlSwati()}/packages/destroy/${id}`, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -162,10 +181,33 @@ const changeStatusPackage = async (id, status) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const changeStatusPackageSwathi = async (id, status) => {
+  try {
+    console.log('The status field is', status);
+    const response = await axios.post(
+      `${getBaseUrl()}/packages/updateStatus/${id}`,
+      { status: status },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
 const addSubscription = async (data) => {
   try {
     const response = await axios.post(`${getBaseUrl()}/subcriptions/create`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const addSubscriptionSwathi = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrlSwati()}/subcriptions/create`, data, config);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -200,6 +242,15 @@ const deleteSubscription = async (id) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const deleteSubscriptionSwathi = async (id) => {
+  try {
+    const response = await axios.delete(`${getBaseUrlSwati()}/subcriptions/destroy/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
 const updateUser = async (data) => {
   try {
@@ -210,10 +261,32 @@ const updateUser = async (data) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const updateUserSwathi = async (data) => {
+  try {
+    const response = await axios.post(`${getBaseUrlSwati()}/updateUser`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 const approveSubscription = async (id) => {
   try {
     const response = await axios.post(
       `${getBaseUrl()}/subcriptions/approveSubscription/${id}`,
+      { status: 1 },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const approveSubscriptionSwathi = async (id) => {
+  try {
+    const response = await axios.post(
+      `${getBaseUrlSwati()}/subcriptions/approveSubscription/${id}`,
       { status: 1 },
       config
     );
@@ -247,4 +320,11 @@ export {
   getAllSubscribePackagesSwathi,
   getAllPackagesSwathi,
   deleteUserSwathi,
+  addSubscriptionSwathi,
+  deleteSubscriptionSwathi,
+  approveSubscriptionSwathi,
+  updateUserSwathi,
+  deletePackageSwathi,
+  changeStatusPackageSwathi,
+  addPackageSwathi,
 };

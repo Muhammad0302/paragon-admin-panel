@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import { getAllUsers,getAllPackages,addSubscription } from 'src/services/authenticate';
+import { getAllUsersSwathi,getAllPackagesSwathi,addSubscriptionSwathi } from 'src/services/authenticate';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
@@ -47,7 +47,7 @@ export default function AddSubscribe1() {
       }
       try {
    
-          const res = await addSubscription(data)
+          const res = await addSubscriptionSwathi(data)
          console.log('Api response', res)
           toast.success('Package subscribe successfully', {
           position: 'top-right',
@@ -84,7 +84,7 @@ export default function AddSubscribe1() {
    useEffect(() => {
        const fetchUsersData = async () => {
     try {
-      const response = await getAllUsers()
+      const response = await getAllUsersSwathi()
       // console.log('The response get all users', response)
       const listOfData = response[1]
 
@@ -95,7 +95,7 @@ export default function AddSubscribe1() {
        }
     const fetchPackageData = async () => {
     try {
-      const response = await getAllPackages()
+      const response = await getAllPackagesSwathi()
       // console.log('The response of api is:', response)
       const listOfData = response.packages
       setPackages(listOfData)

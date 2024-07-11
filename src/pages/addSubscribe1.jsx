@@ -4,7 +4,7 @@ import { AddSubscribeView1 } from 'src/sections/user/view';
 
 // ----------------------------------------------------------------------
 
-export default function AddSubscribePage() {
+export default function AddSubscribePage1() {
   return (
     <>
       <Helmet>

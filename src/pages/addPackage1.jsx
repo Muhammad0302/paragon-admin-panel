@@ -4,7 +4,7 @@ import { AddPackageView1 } from 'src/sections/user/view';
 
 // ----------------------------------------------------------------------
 
-export default function AddPackagePage() {
+export default function AddPackagePage1() {
   return (
     <>
       <Helmet>

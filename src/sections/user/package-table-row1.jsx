@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import { deletePackage,changeStatusPackage } from 'src/services/authenticate';
+import { deletePackageSwathi,changeStatusPackageSwathi } from 'src/services/authenticate';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate,useLocation } from 'react-router-dom';
 import Label from 'src/components/label';
@@ -57,7 +57,7 @@ export default function UserTableRow1({
     
     setOpen(null);
      try {
-      const res = await deletePackage(id)
+      const res = await deletePackageSwathi(id)
       console.log('Delete api response', res)
       toast.success('Package deleted successfully', {
         position: 'top-right',
@@ -90,7 +90,7 @@ export default function UserTableRow1({
      setOpen(null);
   
      try {
-      const res = await changeStatusPackage(id,status)
+      const res = await changeStatusPackageSwathi(id,status)
       console.log('Status api response', res)
       toast.success('Status updated successfully', {
         position: 'top-right',
