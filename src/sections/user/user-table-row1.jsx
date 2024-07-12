@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { deleteUserSwathi,changeStatus } from 'src/services/authenticate';
+import { deleteUserSwathi,changeStatusSwathi } from 'src/services/authenticate';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -86,7 +86,7 @@ export default function UserTableRow1({
       } 
       }
      try {
-      const res = await changeStatus(id,data)
+      const res = await changeStatusSwathi(id,data)
       console.log('Status api response', res)
       toast.success('Status updated Successfully', {
         position: 'top-right',

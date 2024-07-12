@@ -1,15 +1,33 @@
 import axios from 'axios';
 import { getBaseUrl, getBaseUrlSwati } from '../utils/getBaseUrl';
-import { UserInfo } from '../utils/UserInfo';
+import { UserInfo, UserInfoSwathi } from '../utils/UserInfo';
 const token = UserInfo();
+const swathiToken = UserInfoSwathi();
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
   },
 };
+const configSwathi = {
+  headers: {
+    Authorization: `Bearer ${swathiToken}`,
+  },
+};
 const login = async (email, password) => {
   try {
     const response = await axios.post(`${getBaseUrl()}/admin/login`, {
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Login error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const loginSwathi = async (email, password) => {
+  try {
+    const response = await axios.post(`${getBaseUrlSwati()}/admin/login`, {
       email,
       password,
     });
@@ -30,7 +48,7 @@ const getUserDashboardStats = async () => {
 };
 const getUserDashboardStatsSwati = async () => {
   try {
-    const response = await axios.get(`${getBaseUrlSwati()}/dashboard_stats`, config);
+    const response = await axios.get(`${getBaseUrlSwati()}/dashboard_stats`, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -49,7 +67,7 @@ const getAllUsers = async () => {
 
 const getAllUsersSwathi = async () => {
   try {
-    const response = await axios.get(`${getBaseUrlSwati()}/users`, config);
+    const response = await axios.get(`${getBaseUrlSwati()}/users`, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -67,7 +85,7 @@ const addUser = async (data) => {
 };
 const addUserSwati = async (data) => {
   try {
-    const response = await axios.post(`${getBaseUrlSwati()}/register`, data, config);
+    const response = await axios.post(`${getBaseUrlSwati()}/register`, data, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -85,7 +103,7 @@ const deleteUser = async (id) => {
 };
 const deleteUserSwathi = async (id) => {
   try {
-    const response = await axios.delete(`${getBaseUrlSwati()}/deleteUser/${id}`, config);
+    const response = await axios.delete(`${getBaseUrlSwati()}/deleteUser/${id}`, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -95,6 +113,19 @@ const deleteUserSwathi = async (id) => {
 const changeStatus = async (id, data) => {
   try {
     const response = await axios.post(`${getBaseUrl()}/updateUserStatus/${id}`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+const changeStatusSwathi = async (id, data) => {
+  try {
+    const response = await axios.post(
+      `${getBaseUrlSwati()}/updateUserStatus/${id}`,
+      data,
+      configSwathi
+    );
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -113,7 +144,7 @@ const getAllPackages = async () => {
 };
 const getAllPackagesSwathi = async () => {
   try {
-    const response = await axios.get(`${getBaseUrlSwati()}/packages`, config);
+    const response = await axios.get(`${getBaseUrlSwati()}/packages`, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -131,7 +162,7 @@ const addPackage = async (data) => {
 };
 const addPackageSwathi = async (data) => {
   try {
-    const response = await axios.post(`${getBaseUrlSwati()}/packages/create`, data, config);
+    const response = await axios.post(`${getBaseUrlSwati()}/packages/create`, data, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -150,7 +181,10 @@ const deletePackage = async (id) => {
 };
 const deletePackageSwathi = async (id) => {
   try {
-    const response = await axios.delete(`${getBaseUrlSwati()}/packages/destroy/${id}`, config);
+    const response = await axios.delete(
+      `${getBaseUrlSwati()}/packages/destroy/${id}`,
+      configSwathi
+    );
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -187,7 +221,7 @@ const changeStatusPackageSwathi = async (id, status) => {
     const response = await axios.post(
       `${getBaseUrl()}/packages/updateStatus/${id}`,
       { status: status },
-      config
+      configSwathi
     );
     return response.data;
   } catch (error) {
@@ -207,7 +241,11 @@ const addSubscription = async (data) => {
 };
 const addSubscriptionSwathi = async (data) => {
   try {
-    const response = await axios.post(`${getBaseUrlSwati()}/subcriptions/create`, data, config);
+    const response = await axios.post(
+      `${getBaseUrlSwati()}/subcriptions/create`,
+      data,
+      configSwathi
+    );
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -226,7 +264,7 @@ const getAllSubscribePackages = async () => {
 };
 const getAllSubscribePackagesSwathi = async () => {
   try {
-    const response = await axios.get(`${getBaseUrlSwati()}/subcriptions`, config);
+    const response = await axios.get(`${getBaseUrlSwati()}/subcriptions`, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -244,7 +282,10 @@ const deleteSubscription = async (id) => {
 };
 const deleteSubscriptionSwathi = async (id) => {
   try {
-    const response = await axios.delete(`${getBaseUrlSwati()}/subcriptions/destroy/${id}`, config);
+    const response = await axios.delete(
+      `${getBaseUrlSwati()}/subcriptions/destroy/${id}`,
+      configSwathi
+    );
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -263,7 +304,7 @@ const updateUser = async (data) => {
 };
 const updateUserSwathi = async (data) => {
   try {
-    const response = await axios.post(`${getBaseUrlSwati()}/updateUser`, data, config);
+    const response = await axios.post(`${getBaseUrlSwati()}/updateUser`, data, configSwathi);
     return response.data;
   } catch (error) {
     console.error('error:', error.message);
@@ -288,7 +329,7 @@ const approveSubscriptionSwathi = async (id) => {
     const response = await axios.post(
       `${getBaseUrlSwati()}/subcriptions/approveSubscription/${id}`,
       { status: 1 },
-      config
+      configSwathi
     );
     return response.data;
   } catch (error) {
@@ -327,4 +368,6 @@ export {
   deletePackageSwathi,
   changeStatusPackageSwathi,
   addPackageSwathi,
+  loginSwathi,
+  changeStatusSwathi,
 };

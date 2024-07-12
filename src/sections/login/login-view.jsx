@@ -5,7 +5,7 @@ import Iconify from 'src/components/iconify';
 import { useRouter } from 'src/routes/hooks';
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { login } from '../../services/authenticate';
+import { login,loginSwathi } from '../../services/authenticate';
 import { bgGradient } from 'src/theme/css';
 import { alpha, useTheme } from '@mui/material/styles';
 
@@ -21,10 +21,13 @@ export default function LoginView() {
     try {
       setLoading(true);
       const userData = await login(email, password);
-      console.log(userData); // Do something with the response data, like storing it in context or local storage
+      const userDataSwathi = await loginSwathi("superadmin@example.com", "admin123");
+      console.log("The user token swathi data is:",userDataSwathi)
+      // console.log(userData); // Do something with the response data, like storing it in context or local storage
       if (userData.token) {
         localStorage.setItem('userData', JSON.stringify(userData.user));
         localStorage.setItem('token', JSON.stringify(userData.token));
+        localStorage.setItem('tokenSwathi', JSON.stringify(userDataSwathi.token));
         toast.success('Login successfully', {
           position: 'top-right',
           autoClose: 5000,
@@ -39,7 +42,7 @@ export default function LoginView() {
        
         setTimeout(() => {
      
-          router.push('/')
+          router.push('/swatti')
         }, 2000)
       }
      
@@ -64,7 +67,7 @@ export default function LoginView() {
     justifyContent: "center",
     alignItems: "center"}}>
       <Stack spacing={3} sx={{ p: 5, maxWidth: 420, mx: 'auto',backgroundColor: "white" }}>
-        <Typography variant="h4" textAlign="center">Sign in to Paragon Admin Panel</Typography>
+        <Typography variant="h4" textAlign="center">Sign in to Admin Panel</Typography>
         <Divider />
         <TextField
           name="email"
