@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import { updatePackage,addPackageSwathi } from 'src/services/authenticate';
+import { updatePackageSwathi,addPackageSwathi } from 'src/services/authenticate';
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import { useNavigate,useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ const validationSchema = yup.object({
   Name: yup.string().required('First Name is required'),
   price: yup.string().required('Price is required'),
   features: yup.string().required('Features is required'),
-  
+  no_of_saleman: yup.string().required('Number of saleman is required'),
 })
 
 import "./style.css"
@@ -31,7 +31,8 @@ export default function AddPackage1() {
     initialValues: {
       Name: state?.name ||'',
       price: state?.price ||'',
-      features: state?.features ||'',
+      features: state?.features || '',
+      no_of_saleman: state?.noOfSaleman || '' 
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -43,8 +44,9 @@ export default function AddPackage1() {
             name: values.Name,
             price: values.price,
             features: values.features,
+             no_of_salesman:values.no_of_saleman
         }
-         const res = await updatePackage(state.id,data)
+         const res = await updatePackageSwathi(state.id,data)
          console.log('api response', res)
           toast.success('Packages updated successfully', {
           position: 'top-right',
@@ -58,7 +60,7 @@ export default function AddPackage1() {
           transition: Bounce,
         })
         setTimeout(() => {
-         navigate('/package')
+         navigate('/swatti/package')
         }, 2000)
        
         } else {
@@ -66,6 +68,7 @@ export default function AddPackage1() {
             name: values.Name,
             price: values.price,
             features: values.features,
+            no_of_salesman:values.no_of_saleman
         }
           const res = await addPackageSwathi(data)
           console.log('api response', res)
@@ -81,7 +84,7 @@ export default function AddPackage1() {
           transition: Bounce,
         })
         setTimeout(() => {
-         navigate('/package')
+         navigate('/swatti/package')
         }, 2000)
         }
       } catch (error) {
@@ -159,7 +162,21 @@ export default function AddPackage1() {
             />
           </Grid>
     
-       
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id='no_of_saleman'
+              name='no_of_saleman'
+              label='No of Saleman'
+              variant='outlined'
+              fullWidth
+              value={formik.values.no_of_saleman}
+              onChange={formik.handleChange}
+              error={formik.touched.no_of_saleman && Boolean(formik.errors.no_of_saleman)}
+              helperText={formik.touched.no_of_saleman && formik.errors.no_of_saleman}
+              sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
+              InputLabelProps={{ focused: false }}
+            />
+        </Grid>
 
           <Grid item xs={12} container justifyContent='flex-end'>
             <Button

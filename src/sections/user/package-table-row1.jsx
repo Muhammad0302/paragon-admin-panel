@@ -28,6 +28,7 @@ export default function UserTableRow1({
   status,
   id,
   handleClick,
+  noOfSaleman
 }) {
   const [open, setOpen] = useState(null);
   const navigate = useNavigate();
@@ -40,13 +41,14 @@ export default function UserTableRow1({
   };
     const handleEdit = () => {
     
-    navigate('/addPackage',
+    navigate('/swatti/addPackage',
       {
       state: {
         id,
         name,
         price,
-        features,
+          features,
+        noOfSaleman
       },
     }
     )
@@ -139,6 +141,7 @@ export default function UserTableRow1({
         </TableCell>
 
         <TableCell>{price}</TableCell>
+        <TableCell>{noOfSaleman}</TableCell>
 
         <TableCell>{ features}</TableCell>
         

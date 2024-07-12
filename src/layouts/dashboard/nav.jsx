@@ -32,14 +32,26 @@ export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
-	const [open, setOpen] = useState(false);
-  	const [open1, setOpen1] = useState(false);
-	const handleClick = () => {
-		setOpen(!open);
+  const [open, setOpen] = useState(() => {
+    const storedValue = localStorage.getItem('open');
+    return storedValue !== null ? JSON.parse(storedValue) : false;
+  });
+  
+  const [open1, setOpen1] = useState(() => {
+    const storedValue = localStorage.getItem('open1');
+    return storedValue !== null ? JSON.parse(storedValue) : false;
+  });
+  const handleClick = () => {
+    const newValue = !open;
+    localStorage.setItem('open', JSON.stringify(newValue));
+    setOpen(newValue);
   };
+  
   const handleClick1 = () => {
-		setOpen1(!open1);
-	};
+    const newValue = !open1;
+    localStorage.setItem('open1', JSON.stringify(newValue));
+    setOpen1(newValue);
+  };
   useEffect(() => {
     if (openNav) {
       onCloseNav();

@@ -201,6 +201,20 @@ const updatePackage = async (id, data) => {
   }
 };
 
+const updatePackageSwathi = async (id, data) => {
+  try {
+    const response = await axios.post(
+      `${getBaseUrlSwati()}/packages/update/${id}`,
+      data,
+      configSwathi
+    );
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
+
 const changeStatusPackage = async (id, status) => {
   try {
     console.log('The status field is', status);
@@ -370,4 +384,5 @@ export {
   addPackageSwathi,
   loginSwathi,
   changeStatusSwathi,
+  updatePackageSwathi,
 };

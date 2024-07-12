@@ -146,6 +146,7 @@ export default function PackagePage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'price', label: 'Price' },
+                     { id: 'no_of_saleman', label: 'no_of_saleman' },
                     { id: 'features', label: 'Features' },                                                      
                   { id: 'status', label: 'Status' },
                   { id: '' },
@@ -161,6 +162,7 @@ export default function PackagePage() {
                       counter={counter}
                       setCounter={setCounter}
                       name={row.name}
+                      noOfSaleman={row.no_of_salesman}
                       price={row.price}
                       features={row.features}
                       status={row.status}   
