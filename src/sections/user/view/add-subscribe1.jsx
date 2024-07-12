@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import { getAllUsersSwathi,getAllPackagesSwathi,addSubscriptionSwathi } from 'src/services/authenticate';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
-import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem, duration } from '@mui/material'
 import FormHelperText from '@mui/material/FormHelperText'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import { useNavigate,useLocation } from 'react-router-dom';
@@ -44,6 +44,7 @@ export default function AddSubscribe1() {
         package_id: values.Package,
         user_id: values.User,
         type: values.Type,
+  
       }
       try {
    
@@ -61,7 +62,7 @@ export default function AddSubscribe1() {
           transition: Bounce,
           })
         setTimeout(() => {
-         navigate('/subscribe')
+         navigate('/swatti/subscribe')
         }, 2000) 
  
       } catch (error) {
