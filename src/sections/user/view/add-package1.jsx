@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Card from '@mui/material/Card';
+import Chip from '@mui/material/Chip';
+import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import * as yup from 'yup'
@@ -26,7 +28,6 @@ export default function AddPackage1() {
   const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
-  console.log("The pass state value is:",state)
     const formik = useFormik({
     initialValues: {
       Name: state?.name ||'',
@@ -39,6 +40,7 @@ export default function AddPackage1() {
         console.log("the data is:", values)
              
       try {
+   
         if (state) {
           const data = {
             name: values.Name,
@@ -101,7 +103,10 @@ export default function AddPackage1() {
         })
       }
     },
-  })
+    })
+  
+  console.log("The state api is:",formik)
+  
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -147,7 +152,7 @@ export default function AddPackage1() {
             />
         </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            {/* <TextField
               id='features'
               name='features'
               label='Features'
@@ -159,7 +164,29 @@ export default function AddPackage1() {
               helperText={formik.touched.features && formik.errors.features}
               sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
               InputLabelProps={{ focused: false }}
-            />
+            /> */}
+         <Autocomplete
+        multiple
+        id="tags-outlined"
+        options={features}
+        getOptionLabel={(option) => option.title}
+          onChange={(event, value) => {
+    const featuresString = value.map(feature => feature.title).join(', ');
+    return formik.setFieldValue('features', featuresString);
+  }}
+        defaultValue={[features[0]]} 
+        filterSelectedOptions
+        renderInput={(params) => (
+          <TextField
+                    {...params}
+                    label="Features"
+                    placeholder="Features"
+                    error={formik.touched.features && Boolean(formik.errors.features)}
+                    helperText={formik.touched.features && formik.errors.features}
+                    sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
+                  />
+        )}
+      />
           </Grid>
     
           <Grid item xs={12} sm={6}>
@@ -212,3 +239,33 @@ export default function AddPackage1() {
     </Container>
   );
 }
+
+
+const features = [
+  { title: 'Dashboard stats' },
+  { title: 'Parts Management' },
+  { title: 'Inventory' },
+  { title: 'Sale' },
+  { title: 'Transfer' },
+  { title: "Supplier" },
+  { title: 'Customer' },
+  {
+    title: 'Stores'
+  },
+  { title: 'Reports' },
+  { title: 'Expense Type' },
+  {
+    title: 'Accounts'
+  },
+  {
+    title: 'Vouchers'
+  },
+  {
+    title: 'Financial Statements'
+  }
+  ,
+  {
+    title: 'Manage'
+  }
+
+];
