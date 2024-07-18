@@ -34,11 +34,11 @@ export default function AddSubscribe1() {
   const [packages, setPackages] = useState([])
   const formik = useFormik({
     initialValues: {
-     Package:  state.package_id ? state.package_id : '',
-     User: state.user_id ? state.user_id : '',
-     Type: state.duration ? state.duration : '',
-     Price:  state.price ? state.price : '',
-     Features:  state.features ? state.features : ''
+     Package:  state?.package_id ? state?.package_id : '',
+     User: state?.user_id ? state?.user_id : '',
+     Type: state?.duration ? state?.duration : '',
+     Price:  state?.price ? state?.price : '',
+     Features:  state?.features ? state?.features : ''
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
