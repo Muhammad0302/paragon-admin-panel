@@ -266,6 +266,19 @@ const addSubscriptionSwathi = async (data) => {
     throw error; // Throw the error to be caught by the caller
   }
 };
+const updateSubscriptionSwathi = async (id, data) => {
+  try {
+    const response = await axios.post(
+      `${getBaseUrlSwati()}/subcriptions/update/${id}`,
+      data,
+      configSwathi
+    );
+    return response.data;
+  } catch (error) {
+    console.error('error:', error.message);
+    throw error; // Throw the error to be caught by the caller
+  }
+};
 
 const getAllSubscribePackages = async () => {
   try {
@@ -385,4 +398,5 @@ export {
   loginSwathi,
   changeStatusSwathi,
   updatePackageSwathi,
+  updateSubscriptionSwathi,
 };

@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import { getAllUsersSwathi,getAllPackagesSwathi,addSubscriptionSwathi } from 'src/services/authenticate';
+import { getAllUsersSwathi,getAllPackagesSwathi,addSubscriptionSwathi,updateSubscriptionSwathi } from 'src/services/authenticate';
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { Grid, TextField, Button, FormControl, InputLabel, Select, MenuItem, duration } from '@mui/material'
@@ -27,15 +27,18 @@ import "./style.css"
 
 export default function AddSubscribe1() {
   const navigate = useNavigate();
+    const location = useLocation();
+  const { state } = location;
+   console.log("The pass state value is:",state)
   const [users, setUsers] = useState([])
   const [packages, setPackages] = useState([])
   const formik = useFormik({
     initialValues: {
-     Package:  '',
-     User: '',
-     Type:  '',
-     Price:  '',
-     Features:  ''
+     Package:  state.package_id ? state.package_id : '',
+     User: state.user_id ? state.user_id : '',
+     Type: state.duration ? state.duration : '',
+     Price:  state.price ? state.price : '',
+     Features:  state.features ? state.features : ''
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -45,8 +48,42 @@ export default function AddSubscribe1() {
         user_id: values.User,
         type: values.Type,
   
+        }
+      if (state.user_id) {
+           try {
+   
+        const res = await updateSubscriptionSwathi(state.id,data)
+         console.log('Api response', res)
+          toast.success('Package updated successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+          })
+        setTimeout(() => {
+         navigate('/swatti/subscribe')
+        }, 2000) 
+ 
+      } catch (error) {
+        toast.error('Error while subscribing package', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        })
       }
-      try {
+      } else {
+           try {
    
           const res = await addSubscriptionSwathi(data)
          console.log('Api response', res)
@@ -78,6 +115,8 @@ export default function AddSubscribe1() {
           transition: Bounce,
         })
       }
+      }
+   
     },
   })
 
@@ -139,7 +178,9 @@ export default function AddSubscribe1() {
                 onChange={(e) => {
                   formik.setFieldValue('User', e.target.value)
                 }}
-                error={formik.touched.User && Boolean(formik.errors.User)}
+                  error={formik.touched.User && Boolean(formik.errors.User)}
+                  disabled={!!state?.user_id}  // Disable the dropdown if state.user_id is present
+
                 sx={{ '& fieldset': { borderColor: '#8b8787 !important' } }}
               >
                  {users?.map((data, index) => (

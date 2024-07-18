@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Bounce } from 'react-toastify'
-import { deleteSubscriptionSwathi,approveSubscriptionSwathi } from 'src/services/authenticate';
+import { deleteSubscriptionSwathi, approveSubscriptionSwathi } from 'src/services/authenticate';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -45,9 +45,16 @@ export default function UserTableRow1({
   };
 
   const handleEdit = () => {
-    navigate('/addSubscribe',
+    console.log("The pass value data is:",    features,
+        price,
+        duration,
+        id,
+        email,
+        user_id,
+        package_id)
+    navigate('/swatti/addSubscribe',
       {
-      state: {
+        state: {
         features,
         price,
         duration,
@@ -174,7 +181,10 @@ export default function UserTableRow1({
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem> */}
-
+          <MenuItem onClick={handleEdit}>
+          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
+          Edit
+        </MenuItem>
         <MenuItem onClick={()=>handleDelete(id)} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
