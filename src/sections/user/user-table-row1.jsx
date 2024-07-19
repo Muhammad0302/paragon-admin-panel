@@ -171,10 +171,10 @@ export default function UserTableRow1({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleEdit}>
+        {/* <MenuItem onClick={handleEdit}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem onClick={()=>handleDelete(id)} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
