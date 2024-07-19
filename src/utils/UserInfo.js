@@ -12,13 +12,13 @@ export const UserInfo = () => {
 };
 
 export const UserInfoSwathi = () => {
-  const userDataString = localStorage?.getItem('tokenSwathi');
+  const userDataString = localStorage?.getItem('token');
   let userData = null;
   if (userDataString) {
     try {
       userData = JSON?.parse(userDataString);
     } catch (error) {
-      console.error('Error parsing JSON for tokenSwathi:', error);
+      console.error('Error parsing JSON for token:', error);
     }
   }
   return userData;

@@ -86,20 +86,20 @@ export default function Nav({ openNav, onCloseNav }) {
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
          <List>
-					<ListItem button onClick={handleClick1}>
+					{/* <ListItem button onClick={handleClick1}>
 						<ListItemText primary="Auto Hub" />
 						{open1 ? <ExpandLess /> : <ExpandMore />}
-					</ListItem>
-					<Collapse in={open1} timeout="auto" unmountOnExit>
+					</ListItem> */}
+					{/* <Collapse in={open1} timeout="auto" unmountOnExit> */}
 						<List component="div" disablePadding>
 						  {navConfig1.map((item) => (
         <NavItem key={item.title} item={item} />
        
              ))}
 						</List>
-					</Collapse>
+					{/* </Collapse> */}
 		</List>
-      <List>
+      {/* <List>
 					<ListItem button onClick={handleClick}>
 						<ListItemText primary="Paragon" />
 						{open ? <ExpandLess /> : <ExpandMore />}
@@ -112,7 +112,7 @@ export default function Nav({ openNav, onCloseNav }) {
       ))}
 						</List>
 					</Collapse>
-      </List>
+      </List> */}
      
      
     

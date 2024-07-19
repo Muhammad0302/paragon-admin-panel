@@ -20,14 +20,13 @@ export default function LoginView() {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const userData = await login(email, password);
-      const userDataSwathi = await loginSwathi("superadmin@example.com", "admin123");
-      console.log("The user token swathi data is:",userDataSwathi)
+      const userData = await loginSwathi(email, password);
+      // const userDataSwathi = await loginSwathi("superadmin@example.com", "admin123");
+      console.log("The user credential:",userData)
       // console.log(userData); // Do something with the response data, like storing it in context or local storage
       if (userData.token) {
         localStorage.setItem('userData', JSON.stringify(userData.user));
         localStorage.setItem('token', JSON.stringify(userData.token));
-        localStorage.setItem('tokenSwathi', JSON.stringify(userDataSwathi.token));
         toast.success('Login successfully', {
           position: 'top-right',
           autoClose: 5000,
